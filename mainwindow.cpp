@@ -199,8 +199,8 @@ void MainWindow::endCapture(const QList<MouseEvent> &events) {
         }
     }
 
-    connect(table->selectionModel(), &QItemSelectionModel::selectionChanged, [this, &events](const QItemSelection &selected) {
-        for (auto &evt : events) {
+    connect(table->selectionModel(), &QItemSelectionModel::selectionChanged, [&events](const QItemSelection &selected) {
+        for (const MouseEvent &evt : events) {
             evt.graphicsItem->setOpacity(0.25); //set all to 25% opacity
         }
 

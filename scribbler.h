@@ -2,6 +2,7 @@
 #define SCRIBBLER_H
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QGraphicsItem>
 #include <QList>
 #include <QMouseEvent>
 #include <QDataStream>
@@ -9,7 +10,7 @@
 
 class MouseEvent {
 public:
-    enum ActionType {
+    enum Action {
         Press,
         Move,
         Release
@@ -20,7 +21,9 @@ public:
     quint64 time;
     QGraphicsItem *graphicsItem = nullptr;
 
+
     MouseEvent() : action(Press), pos(0,0), time(0) {}
+    MouseEvent(Action a, QPointF p) : action(a), pos(p) {}
     MouseEvent(int _action, QPointF _pos, quint64 _time);
 
     friend QDataStream &operator<<(QDataStream &out, const MouseEvent &evt);

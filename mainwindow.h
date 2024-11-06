@@ -23,6 +23,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    QList<QGraphicsItemGroup*> captureGroups;
+
 public slots:
     void openFileSlot();
     void saveFileSlot();
