@@ -30,6 +30,7 @@ public slots:
 
     void startCapture();
     void endCapture(const QList<MouseEvent> &events); //slot to handle end signal
+    void updateCaptureOpacity(int index);
 
     void lineSegments();
     void dotsOnly();

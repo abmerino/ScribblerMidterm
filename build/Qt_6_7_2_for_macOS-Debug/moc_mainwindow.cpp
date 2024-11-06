@@ -47,6 +47,8 @@ constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::string
     "endCapture",
     "QList<MouseEvent>",
     "events",
+    "updateCaptureOpacity",
+    "index",
     "lineSegments",
     "dotsOnly"
 );
@@ -61,7 +63,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -69,13 +71,14 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   56,    2, 0x0a,    1 /* Public */,
-       3,    0,   57,    2, 0x0a,    2 /* Public */,
-       4,    0,   58,    2, 0x0a,    3 /* Public */,
-       5,    0,   59,    2, 0x0a,    4 /* Public */,
-       6,    1,   60,    2, 0x0a,    5 /* Public */,
-       9,    0,   63,    2, 0x0a,    7 /* Public */,
-      10,    0,   64,    2, 0x0a,    8 /* Public */,
+       1,    0,   62,    2, 0x0a,    1 /* Public */,
+       3,    0,   63,    2, 0x0a,    2 /* Public */,
+       4,    0,   64,    2, 0x0a,    3 /* Public */,
+       5,    0,   65,    2, 0x0a,    4 /* Public */,
+       6,    1,   66,    2, 0x0a,    5 /* Public */,
+       9,    1,   69,    2, 0x0a,    7 /* Public */,
+      11,    0,   72,    2, 0x0a,    9 /* Public */,
+      12,    0,   73,    2, 0x0a,   10 /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -83,6 +86,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 7,    8,
+    QMetaType::Void, QMetaType::Int,   10,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -109,6 +113,9 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         // method 'endCapture'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QList<MouseEvent> &, std::false_type>,
+        // method 'updateCaptureOpacity'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<int, std::false_type>,
         // method 'lineSegments'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'dotsOnly'
@@ -128,8 +135,9 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 2: _t->resetFileSlot(); break;
         case 3: _t->startCapture(); break;
         case 4: _t->endCapture((*reinterpret_cast< std::add_pointer_t<QList<MouseEvent>>>(_a[1]))); break;
-        case 5: _t->lineSegments(); break;
-        case 6: _t->dotsOnly(); break;
+        case 5: _t->updateCaptureOpacity((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 6: _t->lineSegments(); break;
+        case 7: _t->dotsOnly(); break;
         default: ;
         }
     }
@@ -154,13 +162,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 8;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 8)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 7;
+        _id -= 8;
     }
     return _id;
 }

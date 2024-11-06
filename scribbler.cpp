@@ -64,6 +64,20 @@ void Scribbler::endCapture() {
     emit captureEnded(events); //emit to MainWindow
     events.clear(); //clear events
 }
+
+QGraphicsItemGroup* Scribbler::createCaptureGroup(const QList<MouseEvent> &events) {
+    QGraphicsItemGroup *group = new QGraphicsItemGroup();
+
+    for (const MouseEvent &evt : events) {
+        QGraphicsItem *item = scene.addEllipse(evt.pos.x() - 2, evt.pos.y() -2, 4, 4);
+        group->addToGroup(item);
+        QGraphicsItem graphicsItem = item; //store pointer in MouseEvent
+    }
+
+    scene.addItem(group);
+    return group;
+}
+
 void Scribbler::onSaveTriggered() {
     QString fileName = QFileDialog::getSaveFileName(this, "Save Scribble", "", "Scribble Files (*.scrib)");
     if (!fileName.isEmpty() && !saveToFile(fileName)) {
@@ -93,8 +107,8 @@ bool Scribbler::saveToFile(const QString &fileName) {
     stream << 1; //version number for compatibility
     stream << events.size();
 
-    for (const auto& event: events) {
-        stream << event.action << event.pos;
+    for (const MouseEvent &event: events) {
+        stream << event.action << event.pos << event.time;
     }
 
     file.close();
@@ -130,20 +144,6 @@ bool Scribbler::loadFromFile(const QString &fileName) {
 }
 
 void Scribbler::readEvents() {
-    // scene.clear();
-    // //needs revision
-    // foreach (const MouseEvent &evt, events) {
-    //     if (evt.action == MouseEvent::Press) {
-    //         lastPoint = evt.pos;
-    //     } else if (evt.action == MouseEvent::Move){
-    //         scene.addLine(QLineF(lastPoint, evt.pos), QPen(Qt::white, lineWidth));
-    //         lastPoint = evt.pos;
-    //     } else if (evt.action == MouseEvent::Release) {
-    //         scene.addEllipse(QRectF(evt.pos - QPointF(0.5 * lineWidth, 0.5 * lineWidth), QSizeF(lineWidth, lineWidth)), Qt::NoPen, Qt::white);
-    //     }
-    // }
-
-
     scene.clear();
 
     if (events.isEmpty()) {

@@ -6,6 +6,10 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+    // initialize QSettings to load last used directory
+    QSettings settings ("AB Systems", "Scribbler1");
+    lastDir = settings.value("lastDir", QDir::homePath()).toString();
+
     //create new widget on the heap
     centralWidget = new QWidget(this);
 
@@ -19,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
     scribbler = new Scribbler();
     scribbler->setObjectName("scribbler");
     mainLayout->addWidget(scribbler, 1);
+
+    connect(scribbler, &Scribbler::captureEnded, this, &MainWindow::endCapture);
 
     //right-side layout for QTabWidget
     QVBoxLayout *rightLayout = new QVBoxLayout;
@@ -100,14 +106,15 @@ void MainWindow::openFileSlot() {
     QString fileName = QFileDialog::getOpenFileName(this, "Select File", lastDir, "All File (*)");
     if (fileName.isEmpty()) return;
 
-    lastDir = QFileInfo(fileName).absolutePath();
-
     QFile file(fileName);
 
     if(!file.open(QIODevice::ReadOnly)) {
         QMessageBox::information(this, "Error", "Unable to open file");
         return;
     }
+
+    // update lastDir to the directory of the loaded file
+    lastDir = QFileInfo(fileName).absolutePath();
 
     QDataStream in(&file);
     QList<MouseEvent> events;
@@ -121,8 +128,6 @@ void MainWindow::saveFileSlot() {
     QString fileName = QFileDialog::getSaveFileName(this, "Save File", lastDir, "All Files (*)");
     if (fileName.isEmpty()) return;
 
-    lastDir = QFileInfo(fileName).absolutePath();
-
     QFile file(fileName);
 
     if(!file.open(QIODevice::WriteOnly)) {
@@ -130,9 +135,11 @@ void MainWindow::saveFileSlot() {
         return;
     }
 
+    // update lastDir to the directory of the saved file
+    lastDir = QFileInfo(fileName).absolutePath();
+
     QDataStream out(&file);
     out << scribbler->getMouseEvents();
-    file.close();
 }
 
 void MainWindow::resetFileSlot() {
@@ -147,32 +154,74 @@ void MainWindow::startCapture() {
 }
 
 void MainWindow::endCapture(const QList<MouseEvent> &events) {
-    QTableWidget *table = new QTableWidget(events.size(), 3, this);
-    table->setHorizontalHeaderLabels(QStringList() << "Action" << "Position X" << "Position Y");
+    //qDebug() << "End Capture triggered--Event size:" << events.size();
+    QGraphicsItemGroup *group = scribbler->createCaptureGroup(events);
+    captureGroups.append(group);
 
+    //create table
+    QTableWidget *table = new QTableWidget(events.size(), 6, this);
+    //table->setHorizontalHeaderLabels(QStringList() << "Action Type" << "X Position" << "Y Position" << "Distance" << "Speed" << "Angle");
+    table->setHorizontalHeaderLabels({"Action", "X Position", "Y Position", "Distance", "Speed", "Angle"});
 
     for (int i = 0; i<events.size(); ++i) {
         const MouseEvent &evt = events[i];
 
         QTableWidgetItem *actionItem = new QTableWidgetItem();
-        switch (evt.action) {
-            case MouseEvent::Press: actionItem->setText("Press"); break;
-            case MouseEvent::Move: actionItem->setText("Move"); break;
-            case MouseEvent::Release: actionItem->setText("Release"); break;
-        }
+        actionItem->setText(evt.action == MouseEvent::Press ? "Press" : evt.action == MouseEvent::Move ? "Move" : "Release");
+
         table->setItem(i, 0, actionItem);
 
         // x column
-        QTableWidgetItem *rItem = new QTableWidgetItem(QString::number(evt.pos.x()));
-        table->setItem(i, 1, rItem);
+        QTableWidgetItem *xItem = new QTableWidgetItem(QString::number(evt.pos.x()));
+        table->setItem(i, 1, xItem);
 
-        QTableWidgetItem *cItem = new QTableWidgetItem(QString::number(evt.pos.y()));
-        table->setItem(i, 2, cItem);
+        // y column
+        QTableWidgetItem *yItem = new QTableWidgetItem(QString::number(evt.pos.y()));
+        table->setItem(i, 2, yItem);
+
+        if (i > 0) {
+            // calculate distance
+            double distance = QLineF(events[i-1].pos, evt.pos).length();
+            table->setItem(i, 3, new QTableWidgetItem(QString::number(distance)));
+
+            // calculate speed
+            double timeDifference = evt.time - events[i-1].time;
+            double speed = timeDifference > 0 ? distance / timeDifference : 0;
+            table->setItem(i, 4, new QTableWidgetItem(QString::number(speed)));
+
+            // calculate angle
+            if (i > 1) {
+                QLineF line1(events[i-2].pos, events[i -1].pos);
+                QLineF line2(events[i-1].pos, evt.pos);
+                double angle = std::abs(line1.angleTo(line2));
+                table->setItem(i, 5, new QTableWidgetItem(QString::number(angle)));
+            }
+        }
     }
 
+    connect(table->selectionModel(), &QItemSelectionModel::selectionChanged, [this, &events](const QItemSelection &selected) {
+        for (auto &evt : events) {
+            evt.graphicsItem->setOpacity(0.25); //set all to 25% opacity
+        }
+
+        for (const QModelIndex &index : selected.indexes()) {
+            if (index.isValid() && index.row() < events.size()) {
+                events[index.row()].graphicsItem->setOpacity(1.0); // 100% opacity for selected item
+            }
+        }
+    });
+
+    // numbered tab names, incremented for each capture
     QString tabName = QString("Capture %1").arg(tabWidget->count() + 1);
     tabWidget->addTab(table, tabName);
     tabWidget->show();
+    connect(tabWidget, &QTabWidget::currentChanged, this, &MainWindow::updateCaptureOpacity);
+}
+
+void MainWindow::updateCaptureOpacity(int index) {
+    for (int i = 0; i < captureGroups.size(); ++i) {
+        captureGroups[i]->setOpacity(i == index ? 1.0 : 0.25);
+    }
 }
 
 void MainWindow::lineSegments() {
