@@ -10,6 +10,7 @@
 #include <QtGui/qtextcursor.h>
 #include <QtGui/qscreen.h>
 #include <QtCore/qmetatype.h>
+#include <QtCore/QList>
 
 #include <QtCore/qtmochelpers.h>
 
@@ -44,7 +45,9 @@ constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::string
     "resetFileSlot",
     "startCapture",
     "endCapture",
-    "lineSegmentsOnly",
+    "QList<MouseEvent>",
+    "events",
+    "lineSegments",
     "dotsOnly"
 );
 #else  // !QT_MOC_HAS_STRINGDATA
@@ -70,16 +73,16 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
        3,    0,   57,    2, 0x0a,    2 /* Public */,
        4,    0,   58,    2, 0x0a,    3 /* Public */,
        5,    0,   59,    2, 0x0a,    4 /* Public */,
-       6,    0,   60,    2, 0x0a,    5 /* Public */,
-       7,    0,   61,    2, 0x0a,    6 /* Public */,
-       8,    0,   62,    2, 0x0a,    7 /* Public */,
+       6,    1,   60,    2, 0x0a,    5 /* Public */,
+       9,    0,   63,    2, 0x0a,    7 /* Public */,
+      10,    0,   64,    2, 0x0a,    8 /* Public */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 7,    8,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -105,7 +108,8 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'endCapture'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'lineSegmentsOnly'
+        QtPrivate::TypeAndForceComplete<const QList<MouseEvent> &, std::false_type>,
+        // method 'lineSegments'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'dotsOnly'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
@@ -123,13 +127,12 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 1: _t->saveFileSlot(); break;
         case 2: _t->resetFileSlot(); break;
         case 3: _t->startCapture(); break;
-        case 4: _t->endCapture(); break;
-        case 5: _t->lineSegmentsOnly(); break;
+        case 4: _t->endCapture((*reinterpret_cast< std::add_pointer_t<QList<MouseEvent>>>(_a[1]))); break;
+        case 5: _t->lineSegments(); break;
         case 6: _t->dotsOnly(); break;
         default: ;
         }
     }
-    (void)_a;
 }
 
 const QMetaObject *MainWindow::metaObject() const

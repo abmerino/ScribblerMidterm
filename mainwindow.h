@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "scribbler.h"
 #include <QMainWindow>
 #include <QtWidgets>
 #include <QGraphicsScene>
@@ -12,6 +13,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
     QWidget *centralWidget;
+    QString lastDir;
 
     Scribbler *scribbler;
     QTabWidget *tabWidget;
@@ -27,9 +29,9 @@ public slots:
     void resetFileSlot();
 
     void startCapture();
-    void endCapture();
+    void endCapture(const QList<MouseEvent> &events); //slot to handle end signal
 
-    void lineSegmentsOnly();
+    void lineSegments();
     void dotsOnly();
 };
 #endif // MAINWINDOW_H
