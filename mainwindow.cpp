@@ -3,6 +3,10 @@
 #include <QtWidgets>
 #include <QTabWidget>
 
+//ls and dot segment not working how i thought it should be
+//
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -42,6 +46,8 @@ MainWindow::MainWindow(QWidget *parent)
     QWidget *rightWidget = new QWidget(centralWidget);
     rightWidget->setLayout(rightLayout);
     mainLayout->addWidget(rightWidget, 1);
+    //updates capture opacity for tab switching
+    connect(tabWidget, &QTabWidget::currentChanged, this, &MainWindow::updateCaptureOpacity);
 
     //create Menu bar
 
@@ -150,11 +156,17 @@ void MainWindow::resetFileSlot() {
 
 void MainWindow::startCapture() {
     scribbler->startCapture();
-    tabWidget->hide();
+    tabWidget->hide(); //hides tabs during capture
 }
 
-void MainWindow::endCapture(const QList<MouseEvent> &events) {
+void MainWindow::endCapture(QList<MouseEvent> &events) {
     //qDebug() << "End Capture triggered--Event size:" << events.size();
+    if (events.isEmpty()) {
+        QMessageBox::warning(this, "No Data", "No mouse events captured");
+        return;
+    }
+
+    //create new capture group and add to the graphics scene
     QGraphicsItemGroup *group = scribbler->createCaptureGroup(events);
     captureGroups.append(group);
 
@@ -166,18 +178,22 @@ void MainWindow::endCapture(const QList<MouseEvent> &events) {
     for (int i = 0; i<events.size(); ++i) {
         const MouseEvent &evt = events[i];
 
-        QTableWidgetItem *actionItem = new QTableWidgetItem();
-        actionItem->setText(evt.action == MouseEvent::Press ? "Press" : evt.action == MouseEvent::Move ? "Move" : "Release");
+        // QTableWidgetItem *actionItem = new QTableWidgetItem();
+        // actionItem->setText(evt.action == MouseEvent::Press ? "Press" : evt.action == MouseEvent::Move ? "Move" : "Release");
 
-        table->setItem(i, 0, actionItem);
+        // table->setItem(i, 0, actionItem);
 
-        // x column
-        QTableWidgetItem *xItem = new QTableWidgetItem(QString::number(evt.pos.x()));
-        table->setItem(i, 1, xItem);
+        // // x column
+        // QTableWidgetItem *xItem = new QTableWidgetItem(QString::number(evt.pos.x()));
+        // table->setItem(i, 1, xItem);
 
-        // y column
-        QTableWidgetItem *yItem = new QTableWidgetItem(QString::number(evt.pos.y()));
-        table->setItem(i, 2, yItem);
+        // // y column
+        // QTableWidgetItem *yItem = new QTableWidgetItem(QString::number(evt.pos.y()));
+        // table->setItem(i, 2, yItem);
+
+        table->setItem(i, 0, new QTableWidgetItem(evt.action == MouseEvent::Press ? "Press" : evt.action == MouseEvent::Move ? "Move" : "Release"));
+        table->setItem(i, 1, new QTableWidgetItem(QString::number(evt.pos.x())));
+        table->setItem(i, 2, new QTableWidgetItem(QString::number(evt.pos.y())));
 
         if (i > 0) {
             // calculate distance
@@ -199,28 +215,39 @@ void MainWindow::endCapture(const QList<MouseEvent> &events) {
         }
     }
 
-    connect(table->selectionModel(), &QItemSelectionModel::selectionChanged, [&events](const QItemSelection &selected) {
-        for (const MouseEvent &evt : events) {
-            evt.graphicsItem->setOpacity(0.25); //set all to 25% opacity
-        }
-
-        for (const QModelIndex &index : selected.indexes()) {
-            if (index.isValid() && index.row() < events.size()) {
-                events[index.row()].graphicsItem->setOpacity(1.0); // 100% opacity for selected item
-            }
-        }
-    });
-
     // numbered tab names, incremented for each capture
     QString tabName = QString("Capture %1").arg(tabWidget->count() + 1);
     tabWidget->addTab(table, tabName);
     tabWidget->show();
-    connect(tabWidget, &QTabWidget::currentChanged, this, &MainWindow::updateCaptureOpacity);
+
+    //connect table selection to opacity adjustment
+    connect(table->selectionModel(), &QItemSelectionModel::selectionChanged, [=, &events](const QItemSelection &selected) {
+        for (const MouseEvent &evt : events) {
+            //set all to 25% opacity
+            if (evt.graphicsItem) {
+                evt.graphicsItem->setOpacity(0.25);
+            }
+        }
+        //highlight selected items (100% opacity)
+        for (const QModelIndex &index : selected.indexes()) {
+            if (index.isValid() && index.row() < events.size()) {
+                const MouseEvent &evt = events[index.row()];
+                if (evt.graphicsItem) {
+                    evt.graphicsItem->setOpacity(1.0);
+                }
+            }
+        }
+    });
+    // connect(tabWidget, &QTabWidget::currentChanged, this, &MainWindow::updateCaptureOpacity);
 }
 
 void MainWindow::updateCaptureOpacity(int index) {
     for (int i = 0; i < captureGroups.size(); ++i) {
-        captureGroups[i]->setOpacity(i == index ? 1.0 : 0.25);
+        //captureGroups[i]->setOpacity(i == index ? 1.0 : 0.25);
+        QGraphicsItemGroup *group = captureGroups[i];
+        if (group) {
+            group->setOpacity(i == index ? 1.0 : 0.25);
+        }
     }
 }
 
