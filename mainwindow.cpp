@@ -3,10 +3,6 @@
 #include <QtWidgets>
 #include <QTabWidget>
 
-//ls and dot segment not working how i thought it should be
-//
-
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -85,7 +81,6 @@ MainWindow::MainWindow(QWidget *parent)
     captureMenu->addAction(endCap);
 
     menuBar()->addMenu(captureMenu);
-
 
     //View Menu:
     QMenu *viewMenu = new QMenu("&View");
@@ -177,19 +172,6 @@ void MainWindow::endCapture(QList<MouseEvent> &events) {
 
     for (int i = 0; i<events.size(); ++i) {
         const MouseEvent &evt = events[i];
-
-        // QTableWidgetItem *actionItem = new QTableWidgetItem();
-        // actionItem->setText(evt.action == MouseEvent::Press ? "Press" : evt.action == MouseEvent::Move ? "Move" : "Release");
-
-        // table->setItem(i, 0, actionItem);
-
-        // // x column
-        // QTableWidgetItem *xItem = new QTableWidgetItem(QString::number(evt.pos.x()));
-        // table->setItem(i, 1, xItem);
-
-        // // y column
-        // QTableWidgetItem *yItem = new QTableWidgetItem(QString::number(evt.pos.y()));
-        // table->setItem(i, 2, yItem);
 
         table->setItem(i, 0, new QTableWidgetItem(evt.action == MouseEvent::Press ? "Press" : evt.action == MouseEvent::Move ? "Move" : "Release"));
         table->setItem(i, 1, new QTableWidgetItem(QString::number(evt.pos.x())));

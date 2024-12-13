@@ -74,12 +74,8 @@ QGraphicsItemGroup* Scribbler::createCaptureGroup(QList<MouseEvent> &events) {
     QGraphicsItemGroup *group = new QGraphicsItemGroup();
 
     for (MouseEvent &evt : events) {
-        // QGraphicsItem *item = scene.addEllipse(evt.pos.x() - 2, evt.pos.y() -2, 4, 4);
-        // group->addToGroup(item);
-        // QGraphicsItem* graphicsItem = item; //store pointer in MouseEvent
         QGraphicsEllipseItem *ellipse = new QGraphicsEllipseItem(evt.pos.x() - 2, evt.pos.y() - 2, 4, 4);
         scene.addItem(ellipse);
-        //group->addToGroup(ellipse); evt.graphicsItem = ellipse;
         group->addToGroup(ellipse);
         evt.graphicsItem = ellipse;
     }
