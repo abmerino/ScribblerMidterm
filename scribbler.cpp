@@ -14,12 +14,16 @@ QDataStream &operator>>(QDataStream &in, MouseEvent &evt) {
     return in;
 }
 
-Scribbler::Scribbler(QWidget *parent) : QGraphicsView(parent), lineWidth(4.0) {
+Scribbler::Scribbler(QWidget *parent) : QGraphicsView(parent), lineWidth(4.0), viewMode(ViewMode::LineSegments) {
     setScene(&scene);
     setRenderHint(QPainter::Antialiasing, true);
     setMinimumSize(QSize(400, 300));
     //setSceneRect(const );
-    scene.setSceneRect(0,0,800,600);
+    scene.setSceneRect(0,0,500,600);
+
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
     //or QElapsedTimer
     timer.start(); //initialize QElapsedTimer
 }
@@ -181,22 +185,29 @@ void Scribbler::readEvents() {
 
 void Scribbler::setViewMode(ViewMode mode) {
     viewMode = mode;
-    update();
+    viewport()->update(); //trigger repaint
 }
 
 void Scribbler::paintEvent(QPaintEvent *event) {
     QGraphicsView::paintEvent(event);
     QPainter painter(viewport());
 
-    for (int i = 0; i<events.size(); ++i) {
+    for (int i = 0; i < events.size(); ++i) {
         const MouseEvent &e = events[i];
 
         if (viewMode == ViewMode::DotsOnly) {
-            painter.drawEllipse(e.pos, 3, 3); //draw dots only
+            //draw dots only
+            painter.setBrush(Qt::white);
+            painter.setPen(Qt::NoPen);
+            painter.drawEllipse(e.pos, 3, 3);
         } else if (viewMode == ViewMode::LineSegments) {
+            //draw both lines and dots
             if (i > 0) {
+                painter.setPen(QPen(Qt::white, lineWidth));
                 painter.drawLine(events[i-1].pos, e.pos);
             }
+            painter.setBrush(Qt::white);
+            painter.setPen(Qt::NoPen);
             painter.drawEllipse(e.pos, 3, 3);
         }
     }
