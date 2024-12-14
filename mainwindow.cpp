@@ -85,15 +85,19 @@ MainWindow::MainWindow(QWidget *parent)
     //View Menu:
     QMenu *viewMenu = new QMenu("&View");
 
-    QAction *startls = new QAction("&New Line Segment", this);
-    connect(startls, &QAction::triggered, this, &MainWindow::lineSegments);
-    startls->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_L);
-    viewMenu->addAction(startls);
+    //Show both lines and dots
+    QAction *showLinesAndDots = new QAction("&Show Lines and Dots", this);
+    connect(showLinesAndDots, &QAction::triggered, [this]() {
+        scribbler->setViewMode(Scribbler::ViewMode::LineSegments);
+    });
+    viewMenu->addAction(showLinesAndDots);
 
-    QAction *startDots = new QAction("&New Dot Segment", this);
-    connect(startDots, &QAction::triggered, this, &MainWindow::dotsOnly);
-    startDots->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_D);
-    viewMenu->addAction(startDots);
+    //show dots only
+    QAction *showDotsOnly = new QAction("&Show Dots only", this);
+    connect(showDotsOnly, &QAction::triggered, [this]() {
+        scribbler->setViewMode(Scribbler::ViewMode::DotsOnly);
+    });
+    viewMenu->addAction(showDotsOnly);
 
     menuBar()->addMenu(viewMenu);
 }
@@ -173,6 +177,7 @@ void MainWindow::endCapture(QList<MouseEvent> &events) {
     for (int i = 0; i<events.size(); ++i) {
         const MouseEvent &evt = events[i];
 
+<<<<<<< HEAD
         // QTableWidgetItem *actionItem = new QTableWidgetItem();
         // actionItem->setText(evt.action == MouseEvent::Press ? "Press" : evt.action == MouseEvent::Move ? "Move" : "Release");
 
@@ -186,6 +191,8 @@ void MainWindow::endCapture(QList<MouseEvent> &events) {
         // QTableWidgetItem *yItem = new QTableWidgetItem(QString::number(evt.pos.y()));
         // table->setItem(i, 2, yItem);
 
+=======
+>>>>>>> backupBranch
         table->setItem(i, 0, new QTableWidgetItem(evt.action == MouseEvent::Press ? "Press" : evt.action == MouseEvent::Move ? "Move" : "Release"));
         table->setItem(i, 1, new QTableWidgetItem(QString::number(evt.pos.x())));
         table->setItem(i, 2, new QTableWidgetItem(QString::number(evt.pos.y())));

@@ -41,7 +41,11 @@ static constexpr auto qt_meta_stringdata_ZN9ScribblerE = QtMocHelpers::stringDat
     "Scribbler",
     "captureEnded",
     "",
+<<<<<<< HEAD
     "QList<MouseEvent>",
+=======
+    "QList<MouseEvent>&",
+>>>>>>> backupBranch
     "events",
     "reset",
     "onSaveTriggered",
@@ -94,7 +98,11 @@ Q_CONSTINIT const QMetaObject Scribbler::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<Scribbler, std::true_type>,
         // method 'captureEnded'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
+<<<<<<< HEAD
         QtPrivate::TypeAndForceComplete<const QList<MouseEvent> &, std::false_type>,
+=======
+        QtPrivate::TypeAndForceComplete<QList<MouseEvent> &, std::false_type>,
+>>>>>>> backupBranch
         // method 'reset'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'onSaveTriggered'
@@ -110,7 +118,11 @@ void Scribbler::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
     auto *_t = static_cast<Scribbler *>(_o);
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
+<<<<<<< HEAD
         case 0: _t->captureEnded((*reinterpret_cast< std::add_pointer_t<QList<MouseEvent>>>(_a[1]))); break;
+=======
+        case 0: _t->captureEnded((*reinterpret_cast< std::add_pointer_t<QList<MouseEvent>&>>(_a[1]))); break;
+>>>>>>> backupBranch
         case 1: _t->reset(); break;
         case 2: _t->onSaveTriggered(); break;
         case 3: _t->onLoadTriggered(); break;
@@ -120,7 +132,11 @@ void Scribbler::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
     if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
+<<<<<<< HEAD
             using _q_method_type = void (Scribbler::*)(const QList<MouseEvent> & );
+=======
+            using _q_method_type = void (Scribbler::*)(QList<MouseEvent> & );
+>>>>>>> backupBranch
             if (_q_method_type _q_method = &Scribbler::captureEnded; *reinterpret_cast<_q_method_type *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
@@ -161,7 +177,11 @@ int Scribbler::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
+<<<<<<< HEAD
 void Scribbler::captureEnded(const QList<MouseEvent> & _t1)
+=======
+void Scribbler::captureEnded(QList<MouseEvent> & _t1)
+>>>>>>> backupBranch
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

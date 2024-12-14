@@ -402,6 +402,10 @@ DIST          = /Users/abraham/Qt/6.8.1/macos/mkspecs/features/spec_pre.prf \
 		/Users/abraham/Qt/6.8.1/macos/mkspecs/features/qt_config.prf \
 		/Users/abraham/Qt/6.8.1/macos/mkspecs/macx-clang/qmake.conf \
 		/Users/abraham/Qt/6.8.1/macos/mkspecs/features/spec_post.prf \
+<<<<<<< HEAD
+=======
+		../../.qmake.stash \
+>>>>>>> backupBranch
 		/Users/abraham/Qt/6.8.1/macos/mkspecs/features/exclusive_builds.prf \
 		/Users/abraham/Qt/6.8.1/macos/mkspecs/features/mac/sdk.prf \
 		/Users/abraham/Qt/6.8.1/macos/mkspecs/features/toolchain.prf \
@@ -443,7 +447,11 @@ TARGET        = ScribblerMidterm.app/Contents/MacOS/ScribblerMidterm
 EXPORT_QMAKE_MAC_SDK = macosx
 EXPORT_QMAKE_MAC_SDK_VERSION = 15.1
 EXPORT_QMAKE_XCODE_DEVELOPER_PATH = /Applications/Xcode.app/Contents/Developer
+<<<<<<< HEAD
 EXPORT__QMAKE_STASH_ = 
+=======
+EXPORT__QMAKE_STASH_ = /Users/abraham/Desktop/Academics/CS318/ScribblerMidterm/build/Qt_6_8_1_for_macOS-Debug/.qmake.stash
+>>>>>>> backupBranch
 EXPORT_VALID_ARCHS = x86_64 arm64
 EXPORT_DEFAULT_ARCHS = arm64
 EXPORT_ARCHS = $(filter $(EXPORT_VALID_ARCHS), $(if $(ARCHS), $(ARCHS), $(if $(EXPORT_DEFAULT_ARCHS), $(EXPORT_DEFAULT_ARCHS), $(EXPORT_VALID_ARCHS))))
@@ -800,6 +808,10 @@ Makefile: ../../ScribblerMidterm.pro /Users/abraham/Qt/6.8.1/macos/mkspecs/macx-
 		/Users/abraham/Qt/6.8.1/macos/mkspecs/features/qt_config.prf \
 		/Users/abraham/Qt/6.8.1/macos/mkspecs/macx-clang/qmake.conf \
 		/Users/abraham/Qt/6.8.1/macos/mkspecs/features/spec_post.prf \
+<<<<<<< HEAD
+=======
+		.qmake.stash \
+>>>>>>> backupBranch
 		/Users/abraham/Qt/6.8.1/macos/mkspecs/features/exclusive_builds.prf \
 		/Users/abraham/Qt/6.8.1/macos/mkspecs/features/mac/sdk.prf \
 		/Users/abraham/Qt/6.8.1/macos/mkspecs/features/toolchain.prf \
@@ -1175,6 +1187,10 @@ Makefile: ../../ScribblerMidterm.pro /Users/abraham/Qt/6.8.1/macos/mkspecs/macx-
 /Users/abraham/Qt/6.8.1/macos/mkspecs/features/qt_config.prf:
 /Users/abraham/Qt/6.8.1/macos/mkspecs/macx-clang/qmake.conf:
 /Users/abraham/Qt/6.8.1/macos/mkspecs/features/spec_post.prf:
+<<<<<<< HEAD
+=======
+.qmake.stash:
+>>>>>>> backupBranch
 /Users/abraham/Qt/6.8.1/macos/mkspecs/features/exclusive_builds.prf:
 /Users/abraham/Qt/6.8.1/macos/mkspecs/features/mac/sdk.prf:
 /Users/abraham/Qt/6.8.1/macos/mkspecs/features/toolchain.prf:
@@ -1243,6 +1259,10 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r ScribblerMidterm.app
+<<<<<<< HEAD
+=======
+	-$(DEL_FILE) .qmake.stash
+>>>>>>> backupBranch
 	-$(DEL_FILE) Makefile
 
 
@@ -1270,6 +1290,11 @@ moc_mainwindow.cpp: ../../mainwindow.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsview.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/QGraphicsScene \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
+<<<<<<< HEAD
+=======
+		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/QGraphicsItem \
+		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
+>>>>>>> backupBranch
 		/Users/abraham/Qt/6.8.1/macos/lib/QtCore.framework/Headers/QList \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtCore.framework/Headers/qlist.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtGui.framework/Headers/QMouseEvent \
@@ -1324,7 +1349,10 @@ moc_mainwindow.cpp: ../../mainwindow.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsanchorlayout.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicseffect.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsgridlayout.h \
+<<<<<<< HEAD
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
+=======
+>>>>>>> backupBranch
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsitemanimation.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicslayout.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicslayoutitem.h \
@@ -1408,6 +1436,11 @@ moc_scribbler.cpp: ../../scribbler.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsview.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/QGraphicsScene \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
+<<<<<<< HEAD
+=======
+		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/QGraphicsItem \
+		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
+>>>>>>> backupBranch
 		/Users/abraham/Qt/6.8.1/macos/lib/QtCore.framework/Headers/QList \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtCore.framework/Headers/qlist.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtGui.framework/Headers/QMouseEvent \
@@ -1443,6 +1476,11 @@ main.o: ../../main.cpp ../../mainwindow.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsview.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/QGraphicsScene \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
+<<<<<<< HEAD
+=======
+		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/QGraphicsItem \
+		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
+>>>>>>> backupBranch
 		/Users/abraham/Qt/6.8.1/macos/lib/QtCore.framework/Headers/QList \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtCore.framework/Headers/qlist.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtGui.framework/Headers/QMouseEvent \
@@ -1497,7 +1535,10 @@ main.o: ../../main.cpp ../../mainwindow.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsanchorlayout.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicseffect.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsgridlayout.h \
+<<<<<<< HEAD
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
+=======
+>>>>>>> backupBranch
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsitemanimation.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicslayout.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicslayoutitem.h \
@@ -1582,6 +1623,11 @@ mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsview.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/QGraphicsScene \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
+<<<<<<< HEAD
+=======
+		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/QGraphicsItem \
+		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
+>>>>>>> backupBranch
 		/Users/abraham/Qt/6.8.1/macos/lib/QtCore.framework/Headers/QList \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtCore.framework/Headers/qlist.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtGui.framework/Headers/QMouseEvent \
@@ -1636,7 +1682,10 @@ mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsanchorlayout.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicseffect.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsgridlayout.h \
+<<<<<<< HEAD
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
+=======
+>>>>>>> backupBranch
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsitemanimation.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicslayout.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicslayoutitem.h \
@@ -1720,6 +1769,11 @@ scribbler.o: ../../scribbler.cpp ../../scribbler.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsview.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/QGraphicsScene \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
+<<<<<<< HEAD
+=======
+		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/QGraphicsItem \
+		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
+>>>>>>> backupBranch
 		/Users/abraham/Qt/6.8.1/macos/lib/QtCore.framework/Headers/QList \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtCore.framework/Headers/qlist.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtGui.framework/Headers/QMouseEvent \
@@ -1772,7 +1826,10 @@ scribbler.o: ../../scribbler.cpp ../../scribbler.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsanchorlayout.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicseffect.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsgridlayout.h \
+<<<<<<< HEAD
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsitem.h \
+=======
+>>>>>>> backupBranch
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicsitemanimation.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicslayout.h \
 		/Users/abraham/Qt/6.8.1/macos/lib/QtWidgets.framework/Headers/qgraphicslayoutitem.h \

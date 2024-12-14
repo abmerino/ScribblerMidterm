@@ -2,6 +2,7 @@
 #define SCRIBBLER_H
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QGraphicsItem>
 #include <QList>
 #include <QMouseEvent>
 #include <QDataStream>
@@ -9,7 +10,7 @@
 
 class MouseEvent {
 public:
-    enum ActionType {
+    enum Action {
         Press,
         Move,
         Release
@@ -20,12 +21,15 @@ public:
     quint64 time;
     QGraphicsItem *graphicsItem = nullptr;
 
+
     MouseEvent() : action(Press), pos(0,0), time(0) {}
+    MouseEvent(Action a, QPointF p) : action(a), pos(p) {}
     MouseEvent(int _action, QPointF _pos, quint64 _time);
 
     friend QDataStream &operator<<(QDataStream &out, const MouseEvent &evt);
     friend QDataStream &operator>>(QDataStream &out, MouseEvent &evt);
 };
+Q_DECLARE_METATYPE(MouseEvent)
 
 class Scribbler : public QGraphicsView
 {
@@ -36,8 +40,8 @@ public:
         LineSegments,
         DotsOnly
     };
-
-    explicit Scribbler(QWidget *parent = nullptr);
+    //explicit?
+    Scribbler(QWidget *parent = nullptr);
 
     // getter and setter for mouse events
     const QList<MouseEvent>& getMouseEvents() const;
@@ -47,7 +51,7 @@ public:
     void startCapture();
     void endCapture();
     void readEvents();
-    QGraphicsItemGroup* createCaptureGroup(const QList<MouseEvent> &events);
+    QGraphicsItemGroup* createCaptureGroup(QList<MouseEvent> &events);
 
     // view mode
     void setViewMode(ViewMode mode);
@@ -62,7 +66,7 @@ public slots:
     void onLoadTriggered();
 
 signals:
-    void captureEnded(const QList<MouseEvent> &events);
+    void captureEnded(QList<MouseEvent> &events);
 
 protected:
     void mouseMoveEvent(QMouseEvent *evt) override;
@@ -76,9 +80,10 @@ private:
     double lineWidth;
     QPointF lastPoint;
     ViewMode viewMode;
+    QElapsedTimer timer;
 
-    // list for captured mouse events
-    QList<MouseEvent> events;
+    QList<QList<MouseEvent>> captures; //stores all captures
+    QList<MouseEvent> events; //stores the active capture
 };
 
 #endif // SCRIBBLER_H

@@ -47,7 +47,11 @@ static constexpr auto qt_meta_stringdata_ZN10MainWindowE = QtMocHelpers::stringD
     "resetFileSlot",
     "startCapture",
     "endCapture",
+<<<<<<< HEAD
     "QList<MouseEvent>",
+=======
+    "QList<MouseEvent>&",
+>>>>>>> backupBranch
     "events",
     "updateCaptureOpacity",
     "index",
@@ -113,7 +117,11 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'endCapture'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
+<<<<<<< HEAD
         QtPrivate::TypeAndForceComplete<const QList<MouseEvent> &, std::false_type>,
+=======
+        QtPrivate::TypeAndForceComplete<QList<MouseEvent> &, std::false_type>,
+>>>>>>> backupBranch
         // method 'updateCaptureOpacity'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<int, std::false_type>,
@@ -134,7 +142,11 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 1: _t->saveFileSlot(); break;
         case 2: _t->resetFileSlot(); break;
         case 3: _t->startCapture(); break;
+<<<<<<< HEAD
         case 4: _t->endCapture((*reinterpret_cast< std::add_pointer_t<QList<MouseEvent>>>(_a[1]))); break;
+=======
+        case 4: _t->endCapture((*reinterpret_cast< std::add_pointer_t<QList<MouseEvent>&>>(_a[1]))); break;
+>>>>>>> backupBranch
         case 5: _t->updateCaptureOpacity((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
         case 6: _t->lineSegments(); break;
         case 7: _t->dotsOnly(); break;

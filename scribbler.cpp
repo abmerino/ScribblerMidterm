@@ -14,12 +14,18 @@ QDataStream &operator>>(QDataStream &in, MouseEvent &evt) {
     return in;
 }
 
-Scribbler::Scribbler(QWidget *parent) : QGraphicsView(parent), lineWidth(4.0) {
+Scribbler::Scribbler(QWidget *parent) : QGraphicsView(parent), lineWidth(4.0), viewMode(ViewMode::LineSegments) {
     setScene(&scene);
-    // no fixed scene rectangle size here
     setRenderHint(QPainter::Antialiasing, true);
-    // set a default minimum size
     setMinimumSize(QSize(400, 300));
+    //setSceneRect(const );
+    scene.setSceneRect(0,0,500,600);
+
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    //or QElapsedTimer
+    timer.start(); //initialize QElapsedTimer
 }
 
 const QList<MouseEvent>& Scribbler::getMouseEvents() const {
@@ -37,7 +43,8 @@ void Scribbler::mouseMoveEvent(QMouseEvent *evt) {
     scene.addEllipse(QRectF(p - QPointF(0.5*lineWidth, 0.5*lineWidth), QSizeF(lineWidth, lineWidth)), Qt::NoPen, Qt::white);
     lastPoint = p;
 
-    events << MouseEvent(MouseEvent::Move, p, evt->timestamp());
+    //events << MouseEvent(MouseEvent::Move, p, evt->timestamp());
+    events << MouseEvent(MouseEvent::Move, p, timer.elapsed()); //use timer for consistent timing
 }
 
 void Scribbler::mousePressEvent(QMouseEvent *evt) {
@@ -58,20 +65,23 @@ void Scribbler::mouseReleaseEvent(QMouseEvent *evt) {
 
 void Scribbler::startCapture() {
     events.clear();
+    timer.start(); //reset elapsed timer
 }
 
 void Scribbler::endCapture() {
+    captures.append(events);
     emit captureEnded(events); //emit to MainWindow
     events.clear(); //clear events
 }
 
-QGraphicsItemGroup* Scribbler::createCaptureGroup(const QList<MouseEvent> &events) {
+QGraphicsItemGroup* Scribbler::createCaptureGroup(QList<MouseEvent> &events) {
     QGraphicsItemGroup *group = new QGraphicsItemGroup();
 
-    for (const MouseEvent &evt : events) {
-        QGraphicsItem *item = scene.addEllipse(evt.pos.x() - 2, evt.pos.y() -2, 4, 4);
-        group->addToGroup(item);
-        QGraphicsItem graphicsItem = item; //store pointer in MouseEvent
+    for (MouseEvent &evt : events) {
+        QGraphicsEllipseItem *ellipse = new QGraphicsEllipseItem(evt.pos.x() - 2, evt.pos.y() - 2, 4, 4);
+        scene.addItem(ellipse);
+        group->addToGroup(ellipse);
+        evt.graphicsItem = ellipse;
     }
 
     scene.addItem(group);
@@ -175,22 +185,29 @@ void Scribbler::readEvents() {
 
 void Scribbler::setViewMode(ViewMode mode) {
     viewMode = mode;
-    update();
+    viewport()->update(); //trigger repaint
 }
 
 void Scribbler::paintEvent(QPaintEvent *event) {
     QGraphicsView::paintEvent(event);
     QPainter painter(viewport());
 
-    for (int i = 0; i<events.size(); ++i) {
+    for (int i = 0; i < events.size(); ++i) {
         const MouseEvent &e = events[i];
 
         if (viewMode == ViewMode::DotsOnly) {
-            painter.drawEllipse(e.pos, 3, 3); //draw dots only
+            //draw dots only
+            painter.setBrush(Qt::white);
+            painter.setPen(Qt::NoPen);
+            painter.drawEllipse(e.pos, 3, 3);
         } else if (viewMode == ViewMode::LineSegments) {
+            //draw both lines and dots
             if (i > 0) {
+                painter.setPen(QPen(Qt::white, lineWidth));
                 painter.drawLine(events[i-1].pos, e.pos);
             }
+            painter.setBrush(Qt::white);
+            painter.setPen(Qt::NoPen);
             painter.drawEllipse(e.pos, 3, 3);
         }
     }
@@ -199,4 +216,5 @@ void Scribbler::paintEvent(QPaintEvent *event) {
 void Scribbler::reset() {
     scene.clear();
     events.clear();
+    captures.clear();
 }

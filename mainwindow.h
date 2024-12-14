@@ -23,13 +23,17 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    //add QGraphics Ellipse pointer and
+    // QList<QList<MouseEvents>>
+    QList<QGraphicsItemGroup*> captureGroups;
+
 public slots:
     void openFileSlot();
     void saveFileSlot();
     void resetFileSlot();
 
     void startCapture();
-    void endCapture(const QList<MouseEvent> &events); //slot to handle end signal
+    void endCapture(QList<MouseEvent> &events); //slot to handle end signal
     void updateCaptureOpacity(int index);
 
     void lineSegments();
