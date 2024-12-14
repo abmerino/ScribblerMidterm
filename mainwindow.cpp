@@ -177,22 +177,6 @@ void MainWindow::endCapture(QList<MouseEvent> &events) {
     for (int i = 0; i<events.size(); ++i) {
         const MouseEvent &evt = events[i];
 
-<<<<<<< HEAD
-        // QTableWidgetItem *actionItem = new QTableWidgetItem();
-        // actionItem->setText(evt.action == MouseEvent::Press ? "Press" : evt.action == MouseEvent::Move ? "Move" : "Release");
-
-        // table->setItem(i, 0, actionItem);
-
-        // // x column
-        // QTableWidgetItem *xItem = new QTableWidgetItem(QString::number(evt.pos.x()));
-        // table->setItem(i, 1, xItem);
-
-        // // y column
-        // QTableWidgetItem *yItem = new QTableWidgetItem(QString::number(evt.pos.y()));
-        // table->setItem(i, 2, yItem);
-
-=======
->>>>>>> backupBranch
         table->setItem(i, 0, new QTableWidgetItem(evt.action == MouseEvent::Press ? "Press" : evt.action == MouseEvent::Move ? "Move" : "Release"));
         table->setItem(i, 1, new QTableWidgetItem(QString::number(evt.pos.x())));
         table->setItem(i, 2, new QTableWidgetItem(QString::number(evt.pos.y())));
